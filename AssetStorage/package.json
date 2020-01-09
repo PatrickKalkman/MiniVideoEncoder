@@ -1,0 +1,11 @@
+{
+  "name": "assetstorage",
+  "version": "1.0.0",
+  "description": "Storage for MVE",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Patrick Kalkman (patrick@simpletechture.nl)",
+  "license": "MIT"
+}
