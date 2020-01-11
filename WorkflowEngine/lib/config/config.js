@@ -2,7 +2,7 @@
  * Create and export configuration variables used by the API
  *
  */
-const constants = require('./lib/constants');
+const constants = require('./constants');
 
 // Container for all environments
 const environments = {};
@@ -14,11 +14,8 @@ environments.production = {
   log: {
     level: process.LOG_LEVEL || constants.LOG_LEVELS.DEBUG,
   },
-  key: {
-    fairplayKeyUrl: 'skd://keydelivery.streamingbuzz.com/FairPlay/?KID=',
-  },
   database: {
-    url: process.env.STORAGE_HOST || 'mongodb://workflow:2w13UjMnWorkflow!@localhost:27017/workflow-db?authMechanism=DEFAULT&authSource=workflow-db',
+    url: process.env.STORAGE_HOST || 'mongodb://mve-workflowengine:mve-workflowengine-password@localhost:27017/workflow-db?authMechanism=DEFAULT&authSource=workflow-db',
     name: 'workflow-db',
     connectRetry: 5, // seconds
   },

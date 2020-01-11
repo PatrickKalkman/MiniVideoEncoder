@@ -7,13 +7,16 @@
 const process = require('process');
 
 const log = require('./lib/log');
-const config = require('./config');
+const config = require('./lib/config/config');
 const server = require('./lib/server');
+const workflowEngine = require('./lib/workflowengine/workflowEngine');
 
 const app = {};
 
 app.init = function init() {
   log.info('Started MVE workflow engine, waiting for encoding requests');
+  workflowEngine.start();
+  server.start();
   app.intervalTimer = setTimeout(() => { app.processWorkflowEngine(); });
 };
 
@@ -26,7 +29,8 @@ app.processWorkflowEngine = function processWorkflowEngine() {
 };
 
 app.shutdown = function shutdown() {
-  server.start();
+  server.stop();
+  workflowEngine.stop();
   clearInterval(app.intervalTimer);
   process.exit();
 };
@@ -41,7 +45,6 @@ process.on('SIGTERM', () => {
   app.shutdown();
 });
 
-// Execute the function
 app.init();
 
 module.exports = app;

@@ -4,13 +4,15 @@
 const registerRoutes = require('fastify-register-routes');
 const path = require('path');
 
-const config = require('../config');
+const config = require('./config/config');
 
 const fastify = require('fastify')({
-  // logger: {
-  //   prettyPrint: true,
-  // },
+  logger: {
+    prettyPrint: true,
+  },
 });
+
+fastify.register(require('fastify-sensible'));
 
 const server = {};
 
