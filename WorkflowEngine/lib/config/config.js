@@ -8,7 +8,7 @@ const constants = require('./constants');
 const environments = {};
 
 environments.production = {
-  httpPort: process.env.HTTP_PORT || 3000,
+  httpPort: process.env.HTTP_PORT || 8181,
   host: process.env.HOST || '0.0.0.0',
   envName: 'production',
   log: {
