@@ -49,4 +49,17 @@ database.connect = function connect() {
     });
 };
 
+database.disconnect = function disconnect() {
+  if (database.isConnected()) {
+    mongoose
+      .disconnect()
+      .then(() => {
+        database.isConnectedToDb = false;
+      })
+      .catch((err) => {
+        log.error(`An error occurred while trying to disconnect from the workflow database. Err: ${err}`);
+      });
+  }
+};
+
 module.exports = database;

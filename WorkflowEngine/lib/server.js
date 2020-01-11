@@ -3,6 +3,7 @@
 // Dependencies
 const registerRoutes = require('fastify-register-routes');
 const path = require('path');
+const log = require('./log');
 
 const config = require('./config/config');
 
@@ -38,5 +39,14 @@ server.start = function start() {
 
   start();
 };
+
+server.stop = function stop() {
+  fastify
+    .close(function(err) {
+      if (err) {
+        log.err(`An error occurred while trying to close the http server. Err: ${err}`);
+      }
+    });
+}
 
 module.exports = server;
