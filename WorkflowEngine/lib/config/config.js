@@ -9,7 +9,7 @@ const environments = {};
 
 environments.production = {
   httpPort: process.env.HTTP_PORT || 8181,
-  host: process.env.HOST || '0.0.0.0',
+  httpAddress: process.env.HOST || '0.0.0.0',
   envName: 'production',
   log: {
     level: process.LOG_LEVEL || constants.LOG_LEVELS.DEBUG,

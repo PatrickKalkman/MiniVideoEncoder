@@ -27,24 +27,21 @@ fastify.register(registerRoutes, {
 });
 
 server.start = function start() {
-  const start = async () => {
-    try {
-      await fastify.listen(config.httpPort, config.address);
+  log.info(config.httpAddress);
+  fastify.listen(config.httpPort, config.httpAddress, (err) => {
+    if (!err) {
       fastify.log.info(`The http server is running in ${config.envName} mode and listening on port ${fastify.server.address().port}`);
-    } catch (err) {
-      fastify.log.error(err);
-      process.exit(1);
+    } else {
+      log.error(`An error occurred while trying to start the http server. Err: ${err}`);
     }
-  };
-
-  start();
+  });
 };
 
 server.stop = function stop() {
   fastify
     .close(function(err) {
       if (err) {
-        log.err(`An error occurred while trying to close the http server. Err: ${err}`);
+        log.error(`An error occurred while trying to close the http server. Err: ${err}`);
       }
     });
 }

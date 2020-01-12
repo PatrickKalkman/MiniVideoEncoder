@@ -45,7 +45,7 @@ database.connect = function connect() {
     })
     .catch((err) => {
       log.error(`An error occurred while trying to connect to the workflow database, retrying in ${config.database.connectRetry}s. Err: ${err}`);
-      setTimeout(database.initialize, config.database.connectRetry * 1000);
+      setTimeout(database.connect, config.database.connectRetry * 1000);
     });
 };
 
