@@ -27,7 +27,6 @@ fastify.register(registerRoutes, {
 });
 
 server.start = function start() {
-  log.info(config.httpAddress);
   fastify.listen(config.httpPort, config.httpAddress, (err) => {
     if (!err) {
       fastify.log.info(`The http server is running in ${config.envName} mode and listening on port ${fastify.server.address().port}`);
