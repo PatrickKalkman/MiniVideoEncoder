@@ -1,11 +1,25 @@
 {
   "name": "workflowengine",
   "version": "1.0.0",
+  "private": true,
   "description": "The workflow engine of MVE",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/nodemon/bin/nodemon.js ./index.js"
   },
   "author": "Patrick Kalkman (patrick@simpletechture.nl)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "fastify": "^2.11.0",
+    "fastify-register-routes": "^1.1.2",
+    "fastify-routes": "^2.0.3",
+    "fastify-sensible": "^2.1.1",
+    "mongoose": "^5.8.7",
+    "pino": "^5.15.0",
+    "pino-pretty": "^3.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
 }
