@@ -1,4 +1,4 @@
-name: Build and Publish Docker
+name: Build and Publish WorkflowEngine to Docker
 on: [push]
 jobs:
   build:
@@ -11,3 +11,6 @@ jobs:
         name: pkalkman/mve-workflowengine
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+        dockerfile: ./WorkflowEngine/Dockerfile
+        context: ./WorkflowEngine/
+        tags: "0.4.0"
