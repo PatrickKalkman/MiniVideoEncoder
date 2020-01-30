@@ -1,6 +1,5 @@
 /*
- * Primary file for the mini encoder API
- *
+ * Primary file for the Workflow Engine
  */
 
 // Dependencies
@@ -23,7 +22,6 @@ app.init = function init() {
 
 app.processWorkflowEngine = function processWorkflowEngine() {
   log.info('Processing workflow jobs');
-
   app.intervalTimer = setTimeout(() => {
     app.processWorkflowEngine();
   }, config.workflow.pollingInterval * 1000);
