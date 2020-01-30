@@ -3,12 +3,13 @@ on:
   push:
     paths:
     - 'WorkflowEngine/**'
+    - '.github/workflows/workflowengine.yml'
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Publish to Docker Repository
+    - name: Publish to pkalkman/mve-workflowengine on Docker Hub 
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
         name: pkalkman/mve-workflowengine
