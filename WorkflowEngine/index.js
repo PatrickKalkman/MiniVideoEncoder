@@ -4,6 +4,7 @@
  */
 
 // Dependencies
+const dotenv = require('dotenv').config();
 const process = require('process');
 
 const log = require('./lib/log');

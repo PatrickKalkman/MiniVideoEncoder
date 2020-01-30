@@ -1,27 +1,57 @@
-version: '2'
+version: '2.4'
 services:
+  traefik:
+    container_name: traefik
+    image: traefik:v2.1.3
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --api.insecure=true --providers.docker
+  workflowengine:
+    container_name: workflowengine
+    image: 'workflowengine:0.6.0'
+    depends_on: 
+      workflowdb:
+        condition: service_healthy
+    environment: 
+      - HTTP_PORT=8080
+      - STORAGE_HOST=mongodb://mve-workflowengine:mve-workflowengine-password@workflowdb:27017/workflow-db?authMechanism=DEFAULT&authSource=workflow-db
+    labels:
+      - traefik.http.routers.workflowengine.rule=Host(`workflowengine.localhost`)
+    networks:
+      - mve-network
+  workflowencoder:
+    container_name: workflowencoder
+    image: 'workflowencoder:0.6.0'
+    depends_on: 
+      workflowengine:
+        condition: service_healthy
+    labels:
+      - traefik.http.routers.workflowencoder.rule=Host(`workflowencoder.localhost`)
+    environment:
+      - WORKFLOWENGINE_URL=http://workflowengine:8080/api/
+    networks:
+      - mve-network
   workflowdb:
+    container_name: workflowdb
     image: 'mongo:4.0.14'
-    container_name: 'workflow-db'
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
     environment:
       - MONGO_INITDB_ROOT_USERNAME=mveroot
       - MONGO_INITDB_ROOT_PASSWORD=2020minivideoencoder!
       - MONGO_INITDB_DATABASE=workflow-db
+    labels:
+      - traefik.http.routers.workflowdb.rule=Host(`workflowdb.localhost`)
     volumes:
       - ./WorkflowDatabase/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
       - ./WorkflowDatabase/data/workflow-db.db:/data.db
     ports:
       - '27017:27017'
     networks: 
-      - mve-network
-  workflowengine:
-    image: 'workflowengine:0.6.0'
-    container_name: 'workflow-engine'
-    environment: 
-      - STORAGE_HOST=mongodb://mve-workflowengine:mve-workflowengine-password@workflowdb:27017/workflow-db?authMechanism=DEFAULT&authSource=workflow-db
-    ports:
-      - '8181:8181'
-    networks:
       - mve-network
 networks:
     mve-network:

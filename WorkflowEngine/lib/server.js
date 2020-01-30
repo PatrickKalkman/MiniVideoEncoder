@@ -15,9 +15,22 @@ const fastify = require('fastify')({
 
 fastify.register(require('fastify-sensible'));
 
+fastify.register(require('fastify-auth0-verify'), {
+  domain: config.authprovider.domain,
+  secret: config.authprovider.secret
+});
+
+fastify.addHook("onRequest", async (request, reply) => {
+  try {
+    await request.jwtVerify()
+  } catch (err) {
+    reply.send(err)
+  }
+})
+
 const server = {};
 
-// path with your's routes files
+// path with routes files
 const defaultPath = path.join(__dirname, './routes');
 
 fastify.register(registerRoutes, {
