@@ -8,24 +8,19 @@ const constants = require('./constants');
 const environments = {};
 
 environments.production = {
-  httpPort: process.env.HTTP_PORT,
-  httpAddress: process.env.HOST,
+  httpPort: process.env.HTTP_PORT || 3000,
+  host: process.env.HOST || '0.0.0.0',
   envName: 'production',
   log: {
-    level: process.env.LOG_LEVEL,
+    level: process.LOG_LEVEL || constants.LOG_LEVELS.DEBUG,
   },
-  database: {
-    url: process.env.STORAGE_HOST,
-    name: 'workflow-db',
-    connectRetry: 5, // seconds
+  key: {
+    fairplayKeyUrl: '',
   },
-  workflow: {
-    pollingInterval: 10, // Seconds
+  workflowEngine: {
+    url: process.env.WORKFLOWENGINE_URL || 'http://localhost:3000/api/',
+    pollingInterval: 5000, // ms
   },
-  authprovider: {
-    domain: process.env.AUTH_DOMAIN,
-    secret: process.env.AUTH_SECRET
-  }
 };
 
 // Determine which environment was passed as a command-line argument

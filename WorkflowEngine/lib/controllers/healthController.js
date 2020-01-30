@@ -8,7 +8,11 @@ const constants = require('../config/constants');
 const healthController = {};
 
 healthController.getHealth = function getHealth(req, reply) {
-  reply.send({ dateTime: new Date() });
+  reply.send({ 
+      dateTime: new Date(),
+      user: req.user
+   }
+   );
 };
 
 module.exports = healthController;
