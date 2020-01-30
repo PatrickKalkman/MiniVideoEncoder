@@ -1,4 +1,4 @@
-name: Build and Publish WorkflowEncoder to Docker
+name: WorkflowEncoder Build and Publish to Docker
 on: 
   push:
     paths:
