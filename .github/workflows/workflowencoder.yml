@@ -1,0 +1,20 @@
+name: Build and Publish WorkflowEncoder to Docker
+on: 
+  push:
+    paths:
+    - 'WorkflowEncoder/**'
+    - '.github/workflows/workflowencoder.yml'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish to pkalkman/mve-workflowencoder on Docker Hub 
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: pkalkman/mve-workflowencoder
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        dockerfile: ./WorkflowEncoder/Dockerfile
+        context: ./WorkflowEncoder/
+        tags: "0.4.0"
