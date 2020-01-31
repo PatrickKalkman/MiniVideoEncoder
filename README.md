@@ -10,4 +10,5 @@ MVE is
 - Support delivery via MPEG-DASH, HLS and Smooth Streaming)
 - Support major DRMs (Google Widevine, Apple Fairplay, Microsoft PlayReady)
 
-![Build and Publish WorkflowEncoder to Docker](https://github.com/PatrickKalkman/MiniVideoEncoder/workflows/Build%20and%20Publish%20WorkflowEncoder%20to%20Docker/badge.svg?branch=master)
+
+![WorkflowEngine Build and Publish to Docker](https://github.com/PatrickKalkman/MiniVideoEncoder/workflows/WorkflowEngine%20Build%20and%20Publish%20to%20Docker/badge.svg)![WorkflowEncoder Build and Publish to Docker](https://github.com/PatrickKalkman/MiniVideoEncoder/workflows/WorkflowEncoder%20Build%20and%20Publish%20to%20Docker/badge.svg)
