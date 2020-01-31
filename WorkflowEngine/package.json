@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "dotenv": "^8.2.0",
+    "eslint-config-airbnb": "^18.0.1",
     "fastify": "^2.11.0",
     "fastify-auth0-verify": "^0.2.0",
     "fastify-register-routes": "^1.1.2",

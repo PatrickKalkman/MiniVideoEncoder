@@ -19,4 +19,4 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ./WorkflowEngine/Dockerfile
         context: ./WorkflowEngine/
-        tags: "0.4.1"
+        tags: "0.4.2"

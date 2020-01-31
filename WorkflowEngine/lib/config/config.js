@@ -3,6 +3,7 @@
  *
  */
 const constants = require('./constants');
+const secrets = require('./secrets');
 
 // Container for all environments
 const environments = {};
@@ -15,7 +16,7 @@ environments.production = {
     level: process.env.LOG_LEVEL,
   },
   database: {
-    url: process.env.STORAGE_HOST,
+    url: secrets.read('STORAGE_HOST') || process.env.STORAGE_HOST,
     name: 'workflow-db',
     connectRetry: 5, // seconds
   },
@@ -23,8 +24,8 @@ environments.production = {
     pollingInterval: 10, // Seconds
   },
   authprovider: {
-    domain: process.env.AUTH_DOMAIN,
-    secret: process.env.AUTH_SECRET
+    domain: secrets.read('AUTH_DOMAIN') || process.env.AUTH_DOMAIN,
+    secret: secrets.read('AUTH_SECRET') || process.env.AUTH_SECRET
   }
 };
 

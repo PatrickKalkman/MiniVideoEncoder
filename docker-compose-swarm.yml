@@ -1,0 +1,22 @@
+version: "3.1"
+  
+services:
+  workflow-engine:
+    image: pkalkman/mve-workflowengine:0.4.2
+    environment:
+      AUTH_DOMAIN_FILE: /run/secrets/auth_domain
+      AUTH_SECRET_FILE: /run/secrets/auth_secret
+      STORAGE_HOST_FILE: /run/secrets/storage_host
+      HOST: 0.0.0.0
+      HTTP_PORT: 8181
+      LOG_LEVEL: 1
+  workflow-encoder:
+    image: pkalkman/mve-workflowencoder:0.4.0
+    environment:
+secrets:
+  auth_domain:
+    external: true
+  auth_secret:
+    external: true
+  storage_host:
+    external: true
