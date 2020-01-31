@@ -15,7 +15,6 @@ const app = {};
 
 app.init = function init() {
   log.info('Started MVE workflow engine, waiting for encoding requests');
-  log.info(config.database.url);
   workflowEngine.start();
   server.start();
   app.intervalTimer = setTimeout(() => { app.processWorkflowEngine(); });
