@@ -4,6 +4,8 @@ on:
     paths:
     - 'WorkflowEngine/**'
     - '.github/workflows/workflowengine.yml'
+  schedule:
+    - cron: '0 1 * * *'
 jobs:
   build:
     runs-on: ubuntu-latest

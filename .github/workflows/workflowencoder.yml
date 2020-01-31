@@ -4,6 +4,8 @@ on:
     paths:
     - 'WorkflowEncoder/**'
     - '.github/workflows/workflowencoder.yml'
+  schedule:
+    - cron: '0 2 * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
