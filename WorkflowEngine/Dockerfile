@@ -2,7 +2,7 @@ FROM node:12-alpine
 
 EXPOSE 8181
 
-HEALTHCHECK --interval=17s --timeout=3s --start-period=5s \ 
+HEALTHCHECK --interval=10s --timeout=3s --start-period=2s \ 
     CMD node ./lib/healthcheck.js
 
 # Create the work dir and set permissions as WORKDIR set the permissions as root
