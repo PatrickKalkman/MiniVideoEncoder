@@ -4,14 +4,14 @@ const log = require('../log');
 
 const dockerSecret = {};
 
-dockerSecret.read = function read(secretName) {
+dockerSecret.read = function read(secretNameAndPath) {
   try {
-    return fs.readFileSync(`/run/secrets/${secretName}`, 'utf8');
+    return fs.readFileSync(`${secretNameAndPath}`, 'utf8');
   } catch(err) {
     if (err.code !== 'ENOENT') {
-      log.error(`An error occurred while trying to read the secret: ${secretName}. Err: ${err}`);
+      log.error(`An error occurred while trying to read the secret: ${secretNameAndPath}. Err: ${err}`);
     } else {
-      log.debug(`Could not find the secret, probably not running in swarm mode: ${secretName}. Err: ${err}`);
+      log.debug(`Could not find the secret, probably not running in swarm mode: ${secretNameAndPath}. Err: ${err}`);
     }    
     return false;
   }
