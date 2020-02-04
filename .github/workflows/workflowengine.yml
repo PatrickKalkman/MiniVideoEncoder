@@ -25,7 +25,7 @@ jobs:
         current-version: ${{ steps.read_property.outputs.value }}
         version-fragment: 'bug'
     - name: New version
-    run: echo ${{ steps.bump_version.outputs.next-version }}
+      run: echo ${{ steps.bump_version.outputs.next-version }}
     - uses: actions/checkout@master
     - name: Publish to pkalkman/mve-workflowengine on Docker Hub 
       uses: elgohr/Publish-Docker-Github-Action@master
