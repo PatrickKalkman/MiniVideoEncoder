@@ -33,6 +33,11 @@ jobs:
         path: './WorkflowEngine/VERSION'
         property: 'version'
         value: ${{ steps.bump_version.outputs.next-version }}
+    - name: Git commit changes version number
+      uses: matheusalbino/git-commit@v1.0.1
+      with:
+          github-token: ${{ secrets.TOKEN }}
+          message: 'Updated version to ${{ steps.read_property.outputs.value }}'
     - name: Publish to pkalkman/mve-workflowengine on Docker Hub 
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
