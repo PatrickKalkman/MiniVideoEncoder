@@ -13,7 +13,7 @@ jobs:
     - name: Bump version
       uses: remorses/bump-version@js
       with:
-        version_file: ./Workflowengine/VERSION
+        version_file: ../Workflowengine/VERSION
         prefix: WorkflowEngine
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
