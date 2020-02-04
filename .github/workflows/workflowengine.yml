@@ -10,11 +10,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@master
     - name: Read value from Properties-file
       id: read_property
       uses: christian-draeger/read-properties@1.0.0
       with:
-        path: './MiniVideoEncoder/WorkflowEngine/VERSION'
+        path: './WorkflowEngine/VERSION'
         property: 'version'
     - name: Current version
       run: echo ${{ steps.read_property.outputs.value }}
@@ -26,7 +27,6 @@ jobs:
         version-fragment: 'bug'
     - name: New version
       run: echo ${{ steps.bump_version.outputs.next-version }}
-    - uses: actions/checkout@master
     - name: Publish to pkalkman/mve-workflowengine on Docker Hub 
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
