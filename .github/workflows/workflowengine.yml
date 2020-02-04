@@ -16,7 +16,7 @@ jobs:
         version_file: ./Workflowengine/VERSION
         prefix: WorkflowEngine
       env:
-        GITHUB_TOKEN: {{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
     - uses: actions/checkout@master
     - name: Publish to pkalkman/mve-workflowengine on Docker Hub 
       uses: elgohr/Publish-Docker-Github-Action@master
