@@ -27,6 +27,10 @@ jobs:
         version-fragment: 'bug'
     - name: New version
       run: echo ${{ steps.bump_version.outputs.next-version }}
+    - name: Remove existing version file
+      uses: JesseTG/rm@v1.0.0
+      with:
+        path: './WorkflowEngine/VERSION'
     - name: Write new version
       uses: christian-draeger/write-properties@1.0.0
       with:
