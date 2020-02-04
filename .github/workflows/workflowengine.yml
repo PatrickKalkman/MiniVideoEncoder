@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Read value from Properties-file
+    - name: Read current version
       id: read_property
       uses: christian-draeger/read-properties@1.0.0
       with:
@@ -27,6 +27,12 @@ jobs:
         version-fragment: 'bug'
     - name: New version
       run: echo ${{ steps.bump_version.outputs.next-version }}
+    - name: Write new version
+      uses: christian-draeger/write-properties@1.0.0
+      with:
+        path: './WorkflowEngine/VERSION'
+        property: 'version'
+        value: ${{ steps.bump_version.outputs.next-version }}
     - name: Publish to pkalkman/mve-workflowengine on Docker Hub 
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
@@ -35,6 +41,6 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ./WorkflowEngine/Dockerfile
         context: ./WorkflowEngine/
-        tags: "0.4.6"
+        tags: ${{ steps.bump_version.outputs.next-version }}
 
 
