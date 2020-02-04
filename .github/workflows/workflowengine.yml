@@ -14,7 +14,7 @@ jobs:
       id: read_property
       uses: christian-draeger/read-properties@1.0.0
       with:
-        path: './WorkflowEngine/VERSION'
+        path: './MiniVideoEncoder/WorkflowEngine/VERSION'
         property: 'version'
     - name: Current version
       run: echo ${{ steps.read_property.outputs.value }}
