@@ -7,6 +7,14 @@ on:
   schedule:
     - cron: '0 1 * * *'
 jobs:
+  version: 
+    - name: Bump version
+      uses: remorses/bump-version@js
+      with:
+        version_file: ./Workflowengine/VERSION
+        prefix: WorkflowEngine
+      env:
+        GITHUB_TOKEN: {{ secrets.GITHUB_TOKEN }}
   build:
     runs-on: ubuntu-latest
     steps:

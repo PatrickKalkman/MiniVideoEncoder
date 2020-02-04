@@ -19,7 +19,7 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=2020minivideoencoder!
       - MONGO_INITDB_DATABASE=workflow-db
     volumes:
-      #- ./WorkflowDatabase/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./WorkflowDatabase/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
       - mve-workflow-database:/data.db
     ports:
       - '27017:27017'
