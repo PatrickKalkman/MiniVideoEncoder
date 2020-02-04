@@ -37,7 +37,7 @@ jobs:
       uses: matheusalbino/git-commit@v1.0.1
       with:
           github-token: ${{ secrets.TOKEN }}
-          message: 'Updated version to ${{ steps.read_property.outputs.value }}'
+          message: 'Updated version to ${{ steps.bump_version.outputs.next-version }}'
     - name: Publish to pkalkman/mve-workflowengine on Docker Hub 
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
