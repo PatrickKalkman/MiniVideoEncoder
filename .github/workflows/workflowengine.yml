@@ -10,13 +10,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Bump version
-      uses: remorses/bump-version@js
+    - name: Read value from Properties-file
+      id: read_property
+      uses: christian-draeger/read-properties@1.0.0
       with:
-        version_file: ../Workflowengine/VERSION
-        prefix: WorkflowEngine
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        path: './WorkflowEngine/VERSION'
+        property: 'version'
+    - name: Current version
+      run: echo ${{ steps.read_property.outputs.value }}
+    - name: Bump release version
+      id: bump_version
+      uses: christian-draeger/increment-semantic-version@1.0.0
+      with:
+        current-version: ${{ steps.read_property.outputs.value }}
+        version-fragment: 'bug'
+    - name: New version
+    run: echo ${{ steps.bump_version.outputs.next-version }}
     - uses: actions/checkout@master
     - name: Publish to pkalkman/mve-workflowengine on Docker Hub 
       uses: elgohr/Publish-Docker-Github-Action@master
