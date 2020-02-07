@@ -1,4 +1,4 @@
-name: WorkflowEngine Build and Publish to Docker
+name: WorkflowEngine - Build and Publish to Docker
 on: 
   push:
     paths:
