@@ -37,11 +37,6 @@ jobs:
         path: './WorkflowEngine/VERSION'
         property: 'version'
         value: ${{ steps.bump_version.outputs.next-version }}
-    - name: Git commit changes version number
-      uses: matheusalbino/git-commit@v1.0.1
-      with:
-          github-token: ${{ secrets.TOKEN }}
-          message: 'Updated version to ${{ steps.bump_version.outputs.next-version }}'
     - name: Publish to pkalkman/mve-workflowengine on Docker Hub 
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
@@ -51,5 +46,15 @@ jobs:
         dockerfile: ./WorkflowEngine/Dockerfile
         context: ./WorkflowEngine/
         tags: ${{ steps.bump_version.outputs.next-version }}
+    - name: Git commit changes version number
+      uses: matheusalbino/git-commit@v1.0.1
+      with:
+          github-token: ${{ secrets.TOKEN }}
+          message: 'Updated version to ${{ steps.bump_version.outputs.next-version }}'
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2.0.0
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_MESSAGE: 'A new version of WorkflowEngine (${{ steps.bump_version.outputs.next-version }}) was build and published to Docker Hub' 
 
 
