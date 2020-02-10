@@ -18,7 +18,7 @@ environments.production = {
     fairplayKeyUrl: '',
   },
   workflowEngine: {
-    url: process.env.WORKFLOWENGINE_URL || 'http://localhost:3000/api/',
+    url: process.env.WORKFLOWENGINE_URL || 'http://localhost:8181/api/',
     pollingInterval: 5000, // ms
   },
 };

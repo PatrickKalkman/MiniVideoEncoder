@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 
 const log = require('../log');
 const config = require('../config/config');
+const Job = require('../models/job')
 
 const database = {};
 
@@ -59,6 +60,33 @@ database.disconnect = function disconnect() {
       .catch((err) => {
         log.error(`An error occurred while trying to disconnect from the workflow database. Err: ${err}`);
       });
+  }
+};
+
+database.getJobs = async function getJobs(status) {
+  const jobs = await Job.find({ status }).catch((err) => {
+    log.error(`An error occurred while searching for jobs. Err: ${err}`);
+  });
+  return jobs;
+};
+
+database.updateJob = async function updateJob(job) {
+  try {
+    const { ...updateData } = job._doc;
+    const update = await Job.findByIdAndUpdate(job.id, updateData);
+    return update;
+  } catch (err) {
+    log.error(`An error occurred while trying to update jobs ${job.name}. Err: ${err}`);
+    return null;
+  }
+};
+
+database.addTask = async function addTask(task) {
+  try {
+    return task.save();
+  } catch (err) {
+    log.error(`An error occurred while trying to add task ${task.name}. Err: ${err}`);
+    return null;
   }
 };
 

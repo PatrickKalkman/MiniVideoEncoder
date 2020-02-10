@@ -8,7 +8,7 @@ const axios = require('axios').default;
 const log = require('./log');
 const constants = require('./constants');
 const config = require('./config');
-const encoder = require('./encoder/encoder');
+const { parentPort, workerData } =  require("worker_threads");
 
 const encoderEngine = {};
 
@@ -39,7 +39,7 @@ encoderEngine.setTaskToFinished = function setTaskToFinished(id, cb) {
 }
 
 encoderEngine.setTaskToError = function setTaskToFinished(id, err, cb) {
-  // Check with the workflow engine API to see if there is something to encode
+  // Set the task with the give id to error
   const url = `${config.workflowEngine.url}tasks/${id}`;
   axios.put(url, { status: constants.WORKFLOW_STATUS.ERROR, statusMessage: err.message })
     .then(function (resp) {
@@ -52,15 +52,15 @@ encoderEngine.setTaskToError = function setTaskToFinished(id, err, cb) {
 }
 
 encoderEngine.startEncoder = function startEncoder(encodingInstructions, cb) {
-  log.info('Start encoder');
+  log.info('Starting Worker for Encoding');
 
-  encoder.encode(encodingInstructions, (err) => {
-    log.error(`An error occurred during encoding. Err: ${err}`);
-    cb(err)
-  }, (info) => {
-    log.info(`percentage done: ${info.percent}`);
-  },  () => {
-    cb(null);
+  const worker = new Worker('./encoder/encoder.js', { encodingInstructions });
+  worker.on('message', cb(null));
+  worker.on('error', cb(err));
+  worker.on('exit', (code) => {
+    if (code !== 0) {
+      cb(new Error(`Worker stopped with exit code ${code}`));
+    }
   });
 
 }

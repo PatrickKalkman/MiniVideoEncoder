@@ -6,6 +6,7 @@
 const log = require('../log');
 const constants = require('../config/constants');
 const database = require('../database/database');
+const jobSplitter = require('./jobSplitter');
 
 const workflowEngine = {};
 
@@ -39,6 +40,21 @@ workflowEngine.showInfo = async function showInfo() {
 workflowEngine.processJobs = async function processJobs() {
   if (!database.isConnected) {
     return;
+  }
+  const newJobs = await database.getJobs(constants.WORKFLOW_STATUS.NEW);
+  if (newJobs && Array.isArray(newJobs) && newJobs.length > 0) {
+    newJobs.forEach((job) => {
+      log.info(`Splitting job: ${job.name}`);
+      jobSplitter.split(job._doc, (err) => {
+        if (!err) {
+          const jobToUpdate = job;
+          jobToUpdate.status = constants.WORKFLOW_STATUS.INPROGRESS;
+          database.updateJob(jobToUpdate);
+        } else {
+          log.error(`An error occurred during splitting. Err: ${err}`);
+        }
+      });
+    });
   }
 };
 

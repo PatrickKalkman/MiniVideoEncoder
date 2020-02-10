@@ -21,7 +21,11 @@ app.init = function init() {
 };
 
 app.processWorkflowEngine = function processWorkflowEngine() {
+  
   log.info('Processing workflow jobs');
+  workflowEngine.showInfo();
+  workflowEngine.processJobs();
+
   app.intervalTimer = setTimeout(() => {
     app.processWorkflowEngine();
   }, config.workflow.pollingInterval * 1000);

@@ -1,6 +1,5 @@
-const Job = require('../models/job');
 const constants = require('../config/constants');
-
+const Job = require('../models/job');
 const jobController = {};
 
 jobController.getJobs = function getJobs(req, reply) {
