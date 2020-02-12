@@ -11,23 +11,10 @@ const log = require('../log');
 const config = require('../config');
 const constants = require('../constants');
 
-// module.exports  =  function  imageResizer(image, size) {
+async function encode() {
 
-//   return  new  Promise((resolve, reject) => {
-//   const  worker  =  new  Worker(__dirname  +    "/worker.js", {
-// workerData: { image, size }
-// });
-//   worker.on("message", resolve);
-//   worker.on("error", reject);
-//   worker.on("exit", code  => {
-//       if (code  !==  0)
-//           reject(new  Error(`Worker stopped with exit code ${code}`));
-//       });
-//   });
-// };
-
-
-function encode(encoderOptions) {
+  const encoderOptions = workerData;
+  
   const startTime = Date.now();
   const inputAsset = path.join(encoderOptions.inputFolder, encoderOptions.inputAsset);
   const outputAsset = path.join(encoderOptions.outputFolder, encoderOptions.outputAsset);
@@ -45,20 +32,28 @@ function encode(encoderOptions) {
     .audioFrequency(encoderOptions.audioFrequency)
     .withOutputOptions('-force_key_frames "expr:gte(t,n_forced*2)"')
     .outputOption('-x265-params keyint=48:min-keyint=48:scenecut=0:ref=5:bframes=3:b-adapt=2')
-    .setDuration(60)
     .on('progress', (info) => {
-      //cbProgress(info);
+      const message = {};
+      message.type = 'progress';
+      message.message = `Encoding: ${Math.round(info.percent)}%`;
+      parentPort.postMessage(message);
     })
     .on('end', () => {
+      const message = {};
+      message.type = 'done';
       const endTime = Date.now();
-      log.info(`Encoding finished after ${((endTime - startTime) / 1000)} s`);
-      //cbFinished();
+      message.message = `Encoding finished after ${((endTime - startTime) / 1000)} s`;
+      parentPort.postMessage(message);     
     })
     .on('error', (err, stdout, stderr) => {
+      const message = {};
+      message.type = 'error';
+      message.message = `An error occurred during encoding. Err: ${err.message}`;
+      parentPort.postMessage(message);  
+
       log.error(`Error: ${err.message}`);
-      log.error(`ffmpeg output:\n${stdout}`);
-      log.error(`ffmpeg stderr:\n${stderr}`);
-      //cbError(err)
+      log.error(`ffmpeg output: ${stdout}`);
+      log.error(`ffmpeg stderr: ${stderr}`);
     })
     .save(outputAsset);
   } else if (encoderOptions.videoEncoder === constants.ENCODER_TYPES.VP9) {
@@ -71,20 +66,18 @@ function encode(encoderOptions) {
     .audioBitrate(encoderOptions.audioBitrate)
     .audioFrequency(encoderOptions.audioFrequency)
     .outputOption('-crf 23 -keyint_min 48 -g 48 -t 60 -threads 8 -speed 4 -tile-columns 4 -auto-alt-ref 1 -lag-in-frames 25 -frame-parallel 1 -af "channelmap=channel_layout=5.1"')
-    .setDuration(30)
     .on('progress', (info) => {
-      cbProgress(info);
+      log.info(`Encoding: ${info.percent}`);
     })
     .on('end', () => {
       const endTime = Date.now();
       log.info(`Encoding finished after ${((endTime - startTime) / 1000)} s`);
-      //cbFinished();
     })
     .on('error', (err, stdout, stderr) => {
       log.error(`Error: ${err.message}`);
       log.error(`ffmpeg output:\n${stdout}`);
       log.error(`ffmpeg stderr:\n${stderr}`);
-      //cbError(err)
+      log.error(`An error occurred during encoding. Err: ${err.message}`);
     })
     .save(outputAsset);
   }
@@ -97,3 +90,5 @@ function encode(encoderOptions) {
 // ffmpeg -ss 00:16:00 -i joker.mkv -c:v libvpx-vp9 -s 768x432 -pass 2 -b:v 300K -maxrate 330K -keyint_min 48 -g 48 -t 20 -threads 8 -speed 4 -tile-columns 4 -auto-alt-ref 1 -lag-in-frames 25 -frame-parallel 1 -an -f webm joker.webm
 
 };
+
+encode();

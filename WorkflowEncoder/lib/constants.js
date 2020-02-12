@@ -44,4 +44,10 @@ module.exports = Object.freeze({
     X264: 'libx264',
     VP9: 'libvpx-vp9'
   },
+
+  WORKER_MESSAGE_TYPES: { 
+    DONE: 'done',
+    ERROR: 'error', 
+    PROGRESS: 'progress'
+  }
 });
