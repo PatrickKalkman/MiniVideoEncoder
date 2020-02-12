@@ -6,55 +6,53 @@ on:
     - '.github/workflows/workflowencoder.yml'
   schedule:
     - cron: '0 2 * * *'
-    jobs:
-      build:
-        runs-on: ubuntu-latest
-        steps:
-        - uses: actions/checkout@master
-        - name: Read current version
-          id: read_property
-          uses: christian-draeger/read-properties@1.0.0
-          with:
-            path: './WorkflowEncoder/VERSION'
-            property: 'version'
-        - name: Current version
-          run: echo ${{ steps.read_property.outputs.value }}
-        - name: Bump release version
-          id: bump_version
-          uses: christian-draeger/increment-semantic-version@1.0.0
-          with:
-            current-version: ${{ steps.read_property.outputs.value }}
-            version-fragment: 'bug'
-        - name: New version
-          run: echo ${{ steps.bump_version.outputs.next-version }}
-        - name: Remove existing version file
-          uses: JesseTG/rm@v1.0.0
-          with:
-            path: './WorkflowEncoder/VERSION'
-        - name: Write new version
-          uses: christian-draeger/write-properties@1.0.0
-          with:
-            path: './WorkflowEncoder/VERSION'
-            property: 'version'
-            value: ${{ steps.bump_version.outputs.next-version }}
-        - name: Publish to pkalkman/mve-workflowencoder on Docker Hub 
-          uses: elgohr/Publish-Docker-Github-Action@master
-          with:
-            name: pkalkman/mve-workflowencoder
-            username: ${{ secrets.DOCKER_USERNAME }}
-            password: ${{ secrets.DOCKER_PASSWORD }}
-            dockerfile: ./WorkflowEncoder/Dockerfile
-            context: ./WorkflowEncoder/
-            tags: ${{ steps.bump_version.outputs.next-version }}
-        - name: Git commit changes version number
-          uses: matheusalbino/git-commit@v1.0.1
-          with:
-              github-token: ${{ secrets.TOKEN }}
-              message: 'Updated version to ${{ steps.bump_version.outputs.next-version }}'
-        - name: Slack Notification
-          uses: rtCamp/action-slack-notify@v2.0.0
-          env:
-            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-            SLACK_MESSAGE: 'A new version of WorkflowEncoder (${{ steps.bump_version.outputs.next-version }}) was build and published to Docker Hub' 
-    
-    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Read current version
+      id: read_property
+      uses: christian-draeger/read-properties@1.0.0
+      with:
+        path: './WorkflowEncoder/VERSION'
+        property: 'version'
+    - name: Current version
+      run: echo ${{ steps.read_property.outputs.value }}
+    - name: Bump release version
+      id: bump_version
+      uses: christian-draeger/increment-semantic-version@1.0.0
+      with:
+        current-version: ${{ steps.read_property.outputs.value }}
+        version-fragment: 'bug'
+    - name: New version
+      run: echo ${{ steps.bump_version.outputs.next-version }}
+    - name: Remove existing version file
+      uses: JesseTG/rm@v1.0.0
+      with:
+        path: './WorkflowEncoder/VERSION'
+    - name: Write new version
+      uses: christian-draeger/write-properties@1.0.0
+      with:
+        path: './WorkflowEncoder/VERSION'
+        property: 'version'
+        value: ${{ steps.bump_version.outputs.next-version }}
+    - name: Publish to pkalkman/mve-workflowencoder on Docker Hub 
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: pkalkman/mve-workflowencoder
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        dockerfile: ./WorkflowEncoder/Dockerfile
+        context: ./WorkflowEncoder/
+        tags: ${{ steps.bump_version.outputs.next-version }}
+    - name: Git commit changes version number
+      uses: matheusalbino/git-commit@v1.0.1
+      with:
+          github-token: ${{ secrets.TOKEN }}
+          message: 'Updated version to ${{ steps.bump_version.outputs.next-version }}'
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2.0.0
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_MESSAGE: 'A new version of WorkflowEncoder (${{ steps.bump_version.outputs.next-version }}) was build and published to Docker Hub' 
