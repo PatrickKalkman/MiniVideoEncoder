@@ -12,5 +12,4 @@ MVE is
 
 
 ![WorkflowEngine Build and Publish to Docker](https://github.com/PatrickKalkman/MiniVideoEncoder/workflows/WorkflowEngine%20Build%20and%20Publish%20to%20Docker/badge.svg)
-
 ![WorkflowEncoder Build and Publish to Docker](https://github.com/PatrickKalkman/MiniVideoEncoder/workflows/WorkflowEncoder%20Build%20and%20Publish%20to%20Docker/badge.svg)
