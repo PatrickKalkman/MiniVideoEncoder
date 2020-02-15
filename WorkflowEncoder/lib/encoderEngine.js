@@ -63,7 +63,7 @@ encoderEngine.setTaskToError = function setTaskToFinished(id, err, cb) {
 encoderEngine.startEncoder = function startEncoder(encodingInstructions, cb) {
   log.info('Starting Worker....');
 
-  const worker = new workerThreads.Worker('./encoder/encoder.js', {
+  const worker = new workerThreads.Worker('./lib/encoder/encoder.js', {
     workerData: encodingInstructions,
   });
 
