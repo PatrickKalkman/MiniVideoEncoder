@@ -12,22 +12,22 @@ const log = require('../log');
 const constants = require('../constants');
 
 async function encode() {
-  const encoderOptions = workerData;
+  const encodingInstructions = workerData;
   const startTime = Date.now();
-  const inputAsset = path.join(encoderOptions.inputFolder, encoderOptions.inputAsset);
-  const outputAsset = path.join(encoderOptions.outputFolder, encoderOptions.outputAsset);
+  const inputAsset = path.join(encodingInstructions.inputFolder, encodingInstructions.inputAsset);
+  const outputAsset = path.join(encodingInstructions.outputFolder, encodingInstructions.outputAsset);
   log.debug(`input: ${inputAsset}`);
   log.debug(`output: ${outputAsset}`);
 
-  if (encoderOptions.videoEncoder === constants.ENCODER_TYPES.X265) {
+  if (encodingInstructions.videoEncoder === constants.ENCODER_TYPES.X265) {
     const ffmpegCommand = ffmpeg()
       .input(inputAsset)
-      .videoBitrate(encoderOptions.videoBitrate)
-      .videoCodec(encoderOptions.videoEncoder)
-      .size(encoderOptions.videoSize)
-      .audioCodec(encoderOptions.audioEncoder)
-      .audioBitrate(encoderOptions.audioBitrate)
-      .audioFrequency(encoderOptions.audioFrequency)
+      .videoBitrate(encodingInstructions.videoBitrate)
+      .videoCodec(encodingInstructions.videoEncoder)
+      .size(encodingInstructions.videoSize)
+      .audioCodec(encodingInstructions.audioEncoder)
+      .audioBitrate(encodingInstructions.audioBitrate)
+      .audioFrequency(encodingInstructions.audioFrequency)
       .withOutputOptions('-force_key_frames "expr:gte(t,n_forced*2)"')
       .outputOption('-x265-params keyint=48:min-keyint=48:scenecut=0:ref=5:bframes=3:b-adapt=2')
       .on('progress', (info) => {
@@ -62,15 +62,15 @@ async function encode() {
         ffmpegCommand.kill();
       }
     });
-  } else if (encoderOptions.videoEncoder === constants.ENCODER_TYPES.VP9) {
+  } else if (encodingInstructions.videoEncoder === constants.ENCODER_TYPES.VP9) {
     ffmpeg()
       .input(inputAsset)
-      .videoBitrate(encoderOptions.videoBitrate)
-      .videoCodec(encoderOptions.videoEncoder)
-      .size(encoderOptions.videoSize)
-      .audioCodec(encoderOptions.audioEncoder)
-      .audioBitrate(encoderOptions.audioBitrate)
-      .audioFrequency(encoderOptions.audioFrequency)
+      .videoBitrate(encodingInstructions.videoBitrate)
+      .videoCodec(encodingInstructions.videoEncoder)
+      .size(encodingInstructions.videoSize)
+      .audioCodec(encodingInstructions.audioEncoder)
+      .audioBitrate(encodingInstructions.audioBitrate)
+      .audioFrequency(encodingInstructions.audioFrequency)
       .outputOption(
         '-crf 23 -keyint_min 48 -g 48 -t 60 -threads 8 -speed 4 -tile-columns 4 -auto-alt-ref 1 -lag-in-frames 25 -frame-parallel 1 -af "channelmap=channel_layout=5.1"',
       )
@@ -88,7 +88,7 @@ async function encode() {
         log.error(`An error occurred during encoding. ${err.message}`);
       })
       .save(outputAsset);
-  } else if (encoderOptions.videoEncoder === constants.ENCODER_TYPES.X264) {
+  } else if (encodingInstructions.videoEncoder === constants.ENCODER_TYPES.X264) {
     // TODO: fill x264 encoding template
   }
 }
