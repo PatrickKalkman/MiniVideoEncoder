@@ -5,7 +5,7 @@
 // Dependencies
 const log = require('../log');
 const constants = require('../config/constants');
-const storage = require('../database/database');
+const database = require('../database/database');
 const Task = require('../models/task');
 const authoringSpec = require('./authoring-spec');
 

@@ -3,7 +3,6 @@
  */
 
 // Dependencies
-const dotenv = require('dotenv').config();
 const process = require('process');
 
 const log = require('./lib/log');
@@ -17,11 +16,12 @@ app.init = function init() {
   log.info('Started MVE workflow engine, waiting for encoding requests');
   workflowEngine.start();
   server.start();
-  app.intervalTimer = setTimeout(() => { app.processWorkflowEngine(); });
+  app.intervalTimer = setTimeout(() => {
+    app.processWorkflowEngine();
+  });
 };
 
 app.processWorkflowEngine = function processWorkflowEngine() {
-  
   log.info('Processing workflow jobs');
   workflowEngine.showInfo();
   workflowEngine.processJobs();

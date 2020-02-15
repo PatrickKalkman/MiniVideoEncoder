@@ -13,7 +13,7 @@ const database = {};
 
 database.isConnectedToDb = false;
 
-database.isConnected = function() {
+database.isConnected = function isConnected() {
   return database.isConnectedToDb;
 };
 

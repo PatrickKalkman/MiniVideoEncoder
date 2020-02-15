@@ -23,6 +23,9 @@
     "pino-pretty": "^3.5.0"
   },
   "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.1",
     "nodemon": "^2.0.2"
   }
 }

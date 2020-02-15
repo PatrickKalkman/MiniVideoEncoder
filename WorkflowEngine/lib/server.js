@@ -3,15 +3,14 @@
 // Dependencies
 const registerRoutes = require('fastify-register-routes');
 const path = require('path');
-const log = require('./log');
-
-const config = require('./config/config');
-
 const fastify = require('fastify')({
   logger: {
     prettyPrint: true,
   },
 });
+
+const log = require('./log');
+const config = require('./config/config');
 
 fastify.register(require('fastify-sensible'));
 
@@ -37,12 +36,11 @@ server.start = function start() {
 };
 
 server.stop = function stop() {
-  fastify
-    .close(function(err) {
-      if (err) {
-        log.error(`An error occurred while trying to close the http server. Err: ${err}`);
-      }
-    });
-}
+  fastify.close((err) => {
+    if (err) {
+      log.error(`An error occurred while trying to close the http server. Err: ${err}`);
+    }
+  });
+};
 
 module.exports = server;

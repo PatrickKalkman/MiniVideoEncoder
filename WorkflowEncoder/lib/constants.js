@@ -48,6 +48,7 @@ module.exports = Object.freeze({
   WORKER_MESSAGE_TYPES: { 
     DONE: 'done',
     ERROR: 'error', 
-    PROGRESS: 'progress'
+    PROGRESS: 'progress',
+    STOP_ENCODING: "stopencoder"
   }
 });

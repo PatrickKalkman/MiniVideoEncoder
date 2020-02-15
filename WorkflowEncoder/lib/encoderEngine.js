@@ -3,7 +3,7 @@
  */
 
 // Dependencies
-const { Worker, isMainThread, parentPort, workerData } = require('worker_threads');
+const workerThreads = require('worker_threads');
 const superagent = require('superagent');
 
 const log = require('./log');
@@ -22,7 +22,7 @@ encoderEngine.searchTasks = function searchTasks(cb) {
       if (!err) {
         cb(null, res.body);
       } else {
-        log.error(`An error occurred while trying to retrieve a new task. Err: ${err}`);
+        log.error(`An error occurred while trying to retrieve a new task. ${err}`);
         cb(err, null);
       }
     });
@@ -38,7 +38,7 @@ encoderEngine.setTaskToFinished = function setTaskToFinished(id, cb) {
       if (!err) {
         cb(null, res.body);
       } else {
-        log.error(`An error occurred while trying to update the task to finished.Err: ${err}`);
+        log.error(`An error occurred while trying to update the task to finished. ${err}`);
         cb(err, null);
       }
     });
@@ -50,40 +50,38 @@ encoderEngine.setTaskToError = function setTaskToFinished(id, err, cb) {
     .put(url)
     .set('accept', 'json')
     .send({ status: constants.WORKFLOW_STATUS.ERROR, statusMessage: err.message })
-    .end((err, res) => {
-      if (!err) {
+    .end((endErr, res) => {
+      if (!endErr) {
         cb(null, res.body);
       } else {
-        log.error(`An error occurred while trying to update the task to error. Err: ${err}`);
-        cb(err, null);
+        log.error(`An error occurred while trying to update the task to error. ${endErr}`);
+        cb(endErr, null);
       }
     });
 };
 
 encoderEngine.startEncoder = function startEncoder(encodingInstructions, cb) {
-  log.info('Starting Worker for Encoding ' + __dirname + '/encoder/encoder.js');
+  log.info('Starting Worker....');
 
-  const worker = new Worker(__dirname + '/encoder/encoder.js', {
+  const worker = new workerThreads.Worker('./encoder/encoder.js', {
     workerData: encodingInstructions,
   });
 
-  worker.on('message', function(message) {
-    if (message != null) {
-      if (typeof message === 'object') {
-        if (message.type === constants.WORKER_MESSAGE_TYPES.PROGRESS) {
-          log.info(message.message);
-        } else if (message.type === constants.WORKER_MESSAGE_TYPES.ERROR) {
-          cb(new Error(message.message));
-        } else if (message.type === constants.WORKER_MESSAGE_TYPES.DONE) {
-          log.info(message.message);
-          cb(null)
-        }
+  worker.on('message', (message) => {
+    if (message != null && typeof message === 'object') {
+      if (message.type === constants.WORKER_MESSAGE_TYPES.PROGRESS) {
+        log.info(message.message);
+      } else if (message.type === constants.WORKER_MESSAGE_TYPES.ERROR) {
+        cb(new Error(message.message));
+      } else if (message.type === constants.WORKER_MESSAGE_TYPES.DONE) {
+        log.info(message.message);
+        cb(null);
       }
     }
   });
 
   worker.on('error', (err) => {
-    cb(new Error(`An error occurred while encoding. Err: ${err}`));
+    cb(new Error(`An error occurred while encoding. ${err}`));
   });
 
   worker.on('exit', (code) => {
