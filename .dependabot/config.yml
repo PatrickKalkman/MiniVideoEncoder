@@ -3,3 +3,6 @@ update_configs:
   - package_manager: "javascript"
     directory: "/WorkflowEngine"
     update_schedule: "live"
+  - package_manager: "javascript"
+    directory: "/WorkflowEncoder"
+    update_schedule: "live"
