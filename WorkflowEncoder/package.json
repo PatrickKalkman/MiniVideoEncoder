@@ -20,6 +20,6 @@
     "fluent-ffmpeg": "^2.1.2",
     "pino": "^5.15.0",
     "pino-pretty": "^3.6.1",
-    "superagent": "^5.2.1"
+    "superagent": "^5.2.2"
   }
 }
