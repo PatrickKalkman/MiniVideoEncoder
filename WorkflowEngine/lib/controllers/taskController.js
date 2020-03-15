@@ -12,6 +12,7 @@ taskController.getTasks = function getTasks(req, reply) {
     } else {
       reply.internalServerError(err);
     }
+    return null;
   });
 };
 

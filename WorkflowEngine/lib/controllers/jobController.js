@@ -58,8 +58,8 @@ jobController.updateJob = function updateJob(req, reply) {
 };
 
 jobController.deleteJob = function deleteJob(req, reply) {
-  const id = req.params.id;
-  Job.findByIdAndRemove(id, function(err, job) {
+  const { id } = req.params;
+  Job.findByIdAndRemove(id, (err, job) => {
     if (!err) {
       if (job) {
         reply.send(job);

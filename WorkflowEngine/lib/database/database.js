@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 
 const log = require('../log');
 const config = require('../config/config');
-const Job = require('../models/job')
+const Job = require('../models/job');
 
 const database = {};
 

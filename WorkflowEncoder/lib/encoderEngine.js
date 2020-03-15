@@ -12,6 +12,40 @@ const config = require('./config');
 
 const encoderEngine = {};
 
+encoderEngine.startEncoder = function startEncoder(encodingInstructions, cb) {
+  log.info('Starting Worker....');
+
+  const worker = new workerThreads.Worker('./lib/encoder/encoder.js', {
+    workerData: encodingInstructions,
+  });
+
+  worker.on('message', (message) => {
+    if (message != null && typeof message === 'object') {
+      if (message.type === constants.WORKER_MESSAGE_TYPES.PROGRESS) {
+        log.info(message.message);
+      } else if (message.type === constants.WORKER_MESSAGE_TYPES.ERROR) {
+        cb(new Error(message.message));
+      } else if (message.type === constants.WORKER_MESSAGE_TYPES.DONE) {
+        log.info(message.message);
+        cb(null);
+      }
+    }
+  });
+
+  worker.on('error', (err) => {
+    cb(new Error(`An error occurred while encoding. ${err}`));
+  });
+
+  worker.on('exit', (code) => {
+    if (code !== 0) {
+      cb(new Error(`Worker stopped with exit code ${code}`));
+    } else {
+      cb(null);
+    }
+  });
+};
+
+
 encoderEngine.searchTasks = function searchTasks(cb) {
   // Check with the workflow engine API to see if there is something to encode
   const url = `${config.workflowEngine.url}tasks/encoding/new`;
@@ -63,7 +97,7 @@ encoderEngine.setTaskToError = function setTaskToFinished(id, err, cb) {
 encoderEngine.startEncoder = function startEncoder(encodingInstructions, cb) {
   log.info('Starting Worker....');
 
-  const worker = new workerThreads.Worker('./lib/encoder/encoder.js', {
+  const worker = new workerThreads.Worker('.lib/encoder/encoder.js', {
     workerData: encodingInstructions,
   });
 

@@ -26,7 +26,7 @@ environments.production = {
   authprovider: {
     domain: secrets.read('AUTH_DOMAIN_FILE') || process.env.AUTH_DOMAIN,
     secret: secrets.read('AUTH_SECRET_FILE') || process.env.AUTH_SECRET
-  }
+  },
 };
 
 // Determine which environment was passed as a command-line argument

@@ -42,13 +42,13 @@ module.exports = Object.freeze({
   ENCODER_TYPES: {
     X265: 'libx265',
     X264: 'libx264',
-    VP9: 'libvpx-vp9'
+    VP9: 'libvpx-vp9',
   },
 
-  WORKER_MESSAGE_TYPES: { 
+  WORKER_MESSAGE_TYPES: {
     DONE: 'done',
-    ERROR: 'error', 
+    ERROR: 'error',
     PROGRESS: 'progress',
-    STOP_ENCODING: "stopencoder"
-  }
+    STOP_ENCODING: 'stopencoder',
+  },
 });
