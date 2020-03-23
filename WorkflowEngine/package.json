@@ -18,7 +18,7 @@
     "fastify-register-routes": "^1.1.2",
     "fastify-routes": "^2.0.3",
     "fastify-sensible": "^2.1.1",
-    "mongoose": "^5.9.4",
+    "mongoose": "^5.9.6",
     "pino": "^5.17.0",
     "pino-pretty": "^3.6.1"
   },
