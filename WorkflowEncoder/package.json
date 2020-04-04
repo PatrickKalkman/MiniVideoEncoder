@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "fluent-ffmpeg": "^2.1.2",
-    "pino": "^6.1.0",
+    "pino": "^6.1.1",
     "pino-pretty": "^4.0.0",
     "superagent": "^5.2.2"
   }
