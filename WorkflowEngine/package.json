@@ -19,7 +19,7 @@
     "fastify-routes": "^2.0.3",
     "fastify-sensible": "^2.1.1",
     "mongoose": "^5.9.7",
-    "pino": "^6.1.1",
+    "pino": "^6.2.1",
     "pino-pretty": "^4.0.0"
   },
   "devDependencies": {
