@@ -13,7 +13,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "eslint-config-airbnb": "^18.1.0",
-    "fastify": "^2.15.0",
+    "fastify": "^2.15.1",
     "fastify-auth0-verify": "^0.2.0",
     "fastify-register-routes": "^1.1.2",
     "fastify-routes": "^2.0.3",
