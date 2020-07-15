@@ -20,7 +20,7 @@
     "fastify-sensible": "^2.1.1",
     "mongoose": "^5.9.19",
     "pino": "^6.2.1",
-    "pino-pretty": "^4.0.0"
+    "pino-pretty": "^4.0.3"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
