@@ -17,7 +17,7 @@
     "fastify-auth0-verify": "^0.3.1",
     "fastify-register-routes": "^1.1.2",
     "fastify-routes": "^2.0.3",
-    "fastify-sensible": "^2.1.1",
+    "fastify-sensible": "^3.0.1",
     "mongoose": "^5.9.27",
     "pino": "^6.5.0",
     "pino-pretty": "^4.1.0"
