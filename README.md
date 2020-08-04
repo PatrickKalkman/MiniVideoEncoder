@@ -1,6 +1,6 @@
 # MiniVideoEncoder
 
-Mini Video Encoder (MVE) is a modern video encoding platform. 
+Mini Video Encoder (MVE) is a modern video encoding platform based on open-source tools and frameworks.
 
 MVE is
 - Scalable and portable
