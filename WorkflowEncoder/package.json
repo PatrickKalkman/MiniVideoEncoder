@@ -10,7 +10,7 @@
   "author": "Patrick Kalkman (patrick@simpletechture.nl)",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^6.8.0",
+    "eslint": "^7.6.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.21.2",
     "nodemon": "^2.0.4",
