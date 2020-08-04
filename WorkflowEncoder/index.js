@@ -1,6 +1,6 @@
 /*
  * Primary file for the Mini Encoder Workflow Encoder
- *
+ * responsible for starting and stopping encoding
  */
 
 // Dependencies
