@@ -1,5 +1,5 @@
 /*
- * Logging wrapper
+ * Logging wrapper for logging
  */
 const logger = require('pino')({ prettyPrint: true });
 
