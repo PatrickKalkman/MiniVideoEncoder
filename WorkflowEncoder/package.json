@@ -10,16 +10,17 @@
   "author": "Patrick Kalkman (patrick@simpletechture.nl)",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.1",
-    "nodemon": "^2.0.2",
-    "prettier": "^1.19.1"
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.1.0",
+    "minimist": ">=1.2.2"
   },
   "dependencies": {
     "fluent-ffmpeg": "^2.1.2",
-    "pino": "^5.17.0",
-    "pino-pretty": "^3.6.1",
-    "superagent": "^5.2.2"
+    "pino": "^6.5.1",
+    "pino-pretty": "^4.1.0",
+    "superagent": "^6.0.0"
   }
 }
