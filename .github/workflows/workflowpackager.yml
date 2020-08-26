@@ -1,5 +1,6 @@
 name: WorkflowPackager Build and Publish to Docker
-on: 
+on:
+  workflow_dispatch:
   push:
     paths:
     - 'WorkflowPackager/**'

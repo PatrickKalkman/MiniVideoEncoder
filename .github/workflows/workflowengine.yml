@@ -1,5 +1,6 @@
 name: WorkflowEngine - Build and Publish to Docker
-on: 
+on:
+  workflow_dispatch:
   push:
     paths:
     - 'WorkflowEngine/**'
