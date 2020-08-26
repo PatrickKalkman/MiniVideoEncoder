@@ -41,6 +41,12 @@ workflowEngine.processJobs = async function processJobs() {
   if (!database.isConnected) {
     return;
   }
+
+  await workflowEngine.splitNewJobs();
+  await workflowEngine.handleFinishedJobs();
+};
+
+workflowEngine.splitNewJobs = async function splitNewJobs() {
   const newJobs = await database.getJobs(constants.WORKFLOW_STATUS.NEW);
   if (newJobs && Array.isArray(newJobs) && newJobs.length > 0) {
     newJobs.forEach((job) => {
@@ -56,6 +62,19 @@ workflowEngine.processJobs = async function processJobs() {
       });
     });
   }
+};
+
+workflowEngine.handleFinishedJobs = async function handleFinishedJobs() {
+  const runningJobs = await database.getJobs(constants.WORKFLOW_STATUS.INPROGRESS);
+  runningJobs.forEach(async (job) => {
+    const tasksOfJobs = await database.getTasksNewOrInProgress(job._id);
+    if (tasksOfJobs.length === 0) {
+      // job is finished, set the status to done
+      log.info(`Setting job: ${job.name} status to done`);
+      database.updateJobStatus(job._id, constants.WORKFLOW_STATUS.DONE);
+    }
+    // else do nothing, the tasks of the job are still running or new
+  });
 };
 
 module.exports = workflowEngine;

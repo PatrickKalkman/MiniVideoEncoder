@@ -7,7 +7,9 @@ const mongoose = require('mongoose');
 
 const log = require('../log');
 const config = require('../config/config');
+const constants = require('../config/constants');
 const Job = require('../models/job');
+const Task = require('../models/task');
 
 const database = {};
 
@@ -70,6 +72,18 @@ database.getJobs = async function getJobs(status) {
   return jobs;
 };
 
+database.getTasksNewOrInProgress = async function getTasksNewOrInProgress(jobId) {
+  const filter = {
+    jobId,
+    $or: [{ status: constants.WORKFLOW_STATUS.INPROGRESS }, { status: constants.WORKFLOW_STATUS.NEW }],
+  };
+
+  const tasks = await Task.find(filter).catch((err) => {
+    log.error(`An error occurred while searching for tasks. Err: ${err}`);
+  });
+  return tasks;
+};
+
 database.updateJob = async function updateJob(job) {
   try {
     const { ...updateData } = job._doc;
@@ -77,6 +91,16 @@ database.updateJob = async function updateJob(job) {
     return update;
   } catch (err) {
     log.error(`An error occurred while trying to update jobs ${job.name}. Err: ${err}`);
+    return null;
+  }
+};
+
+database.updateJobStatus = async function updateJob(jobId, status) {
+  try {
+    const update = await Job.findByIdAndUpdate(jobId, { status });
+    return update;
+  } catch (err) {
+    log.error(`An error occurred while trying to update jobs ${jobId}. Err: ${err}`);
     return null;
   }
 };

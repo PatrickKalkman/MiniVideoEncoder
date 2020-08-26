@@ -15,7 +15,7 @@ COPY --chown=node:node package*.json ./
 # set the context from now on to use the node user, which is created in the base image
 USER node
 
-RUN npm install --only=prod && npm cache clean --force --loglevel=error
+RUN npm install && npm cache clean --force --loglevel=error
 
 # Copy app source
 COPY --chown=node:node index.js .

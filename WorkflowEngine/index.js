@@ -4,6 +4,7 @@
 
 // Dependencies
 const process = require('process');
+// eslint-disable-next-line no-unused-vars
 const dotenv = require('dotenv').config();
 
 const log = require('./lib/log');

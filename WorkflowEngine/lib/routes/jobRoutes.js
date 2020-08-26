@@ -14,6 +14,12 @@ const jobRoutes = [
     handler: jobController.getJob,
   },
   {
+    name: 'GetStreams',
+    method: 'get',
+    path: '/api/jobs/:id/streams',
+    handler: jobController.getStreams
+  },
+  {
     name: 'AddJob',
     method: 'post',
     path: '/api/jobs',

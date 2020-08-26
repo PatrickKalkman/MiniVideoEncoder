@@ -80,6 +80,12 @@ authoringSpec.init = function init() {
     ],
     packagingTracks: [
       {
+        videoEncoder: 'libx264',
+        videoSize: '1280x720',
+        videoBitrate: 2400,
+        audioEncoder: 'aac',
+        audioBitrate: '320k',
+        audioFrequency: '48000',
         packager: 'hls-fmp4',
       },
     ],

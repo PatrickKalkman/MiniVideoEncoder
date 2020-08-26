@@ -1,5 +1,8 @@
+const path = require('path');
+
 const constants = require('../config/constants');
 const Job = require('../models/job');
+const Task = require('../models/task');
 
 const jobController = {};
 
@@ -27,6 +30,20 @@ jobController.getJob = function getJob(req, reply) {
     }
   });
 };
+
+jobController.getStreams = function getStreams(req, reply) {
+  const { id } = req.params;
+  Task.find({ jobId: id, taskType: constants.TASK_TYPES.ENCODING }, (err, tasks) => {
+    if (!err && tasks) {
+      var outputStreams = tasks.map((task) => {
+        return path.join(task.outputFolder, task.outputAsset);
+      });
+      reply.send(outputStreams);
+    } else {
+      repl.internalServerError(err);
+    }
+  });
+}
 
 jobController.addJob = function addJob(req, reply) {
   const job = new Job(req.body);

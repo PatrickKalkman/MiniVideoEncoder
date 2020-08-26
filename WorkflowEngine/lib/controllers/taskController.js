@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 // External Dependancies
 const constants = require('../config/constants');
 const log = require('../log');
@@ -115,11 +116,10 @@ taskController.getFirstNewPackagingTaskAndUpdate = function getFirstNewPackaging
           if (!findErr) {
             if (notFinishedEncodingTasks.length > 0) {
               // Encoding still busy, set packaging task status back to new.
-              log.debug('Not all encoding tasks finished, setting status of packaging task back to new');
-              task.status = constants.WORKFLOW_STATUS.NEW;
-              Task.updateOne(task._doc, (updateErr, updatedTask) => {
+              log.info('Not all encoding tasks finished, setting status of packaging task back to new');
+              Task.updateOne({ _id: task._id }, { status: constants.WORKFLOW_STATUS.NEW }, (updateErr, updatedTask) => {
                 if (!updateErr) {
-                  reply.send(updatedTask);
+                  reply.send(updatedTask.modifiedCount);
                 } else {
                   reply.badRequest(updateErr);
                 }
@@ -132,7 +132,7 @@ taskController.getFirstNewPackagingTaskAndUpdate = function getFirstNewPackaging
           }
         });
       } else {
-        reply.notFound();
+        reply.send();
       }
     } else {
       reply.badRequest(err);

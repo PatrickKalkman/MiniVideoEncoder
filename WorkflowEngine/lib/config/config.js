@@ -2,7 +2,6 @@
  * Create and export configuration variables used by the API
  *
  */
-const constants = require('./constants');
 const secrets = require('./secrets');
 
 // Container for all environments
@@ -25,7 +24,7 @@ environments.production = {
   },
   authprovider: {
     domain: secrets.read('AUTH_DOMAIN_FILE') || process.env.AUTH_DOMAIN,
-    secret: secrets.read('AUTH_SECRET_FILE') || process.env.AUTH_SECRET
+    secret: secrets.read('AUTH_SECRET_FILE') || process.env.AUTH_SECRET,
   },
 };
 
