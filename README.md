@@ -1,6 +1,7 @@
 # MiniVideoEncoder
 ![WorkflowEngine Build and Publish to Docker](https://github.com/PatrickKalkman/MiniVideoEncoder/workflows/WorkflowEngine%20Build%20and%20Publish%20to%20Docker/badge.svg)
 ![WorkflowEncoder Build and Publish to Docker](https://github.com/PatrickKalkman/MiniVideoEncoder/workflows/WorkflowEncoder%20Build%20and%20Publish%20to%20Docker/badge.svg)
+![WorkflowPackager Build and Publish to Docker](https://github.com/PatrickKalkman/MiniVideoEncoder/workflows/WorkflowPackager%20Build%20and%20Publish%20to%20Docker/badge.svg)
 
 Mini Video Encoder (MVE) is a modern video encoding platform based on open-source tools and frameworks.
 
