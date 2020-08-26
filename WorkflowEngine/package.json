@@ -13,11 +13,10 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "eslint-config-airbnb": "^18.1.0",
-    "fastify": "^2.13.0",
-    "fastify-auth0-verify": "^0.2.0",
+    "fastify": "^3.2.1",
     "fastify-register-routes": "^1.1.2",
-    "fastify-routes": "^2.0.3",
-    "fastify-sensible": "^2.1.1",
+    "fastify-routes": "^3.0.1",
+    "fastify-sensible": "^3.0.1",
     "mongoose": "^5.9.4",
     "pino": "^5.17.0",
     "pino-pretty": "^3.6.1"
