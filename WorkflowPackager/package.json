@@ -1,11 +1,29 @@
 {
-  "name": "packager",
+  "name": "workflowpackager",
   "version": "1.0.0",
-  "description": "Video Packager of MVE",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha",
+    "start": "./node_modules/nodemon/bin/nodemon.js ./index.js"
   },
   "author": "Patrick Kalkman (patrick@simpletechture.nl)",
-  "license": "MIT"
+  "license": "ISC",
+  "preinstall": "npx npm-force-resolutions",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "nodemon": "^2.0.2",
+    "pino-pretty": "^3.6.1",
+    "prettier": "^1.19.1"
+  },
+  "dependencies": {
+    "fluent-bento4": "^1.0.7",
+    "fluent-ffmpeg": "^2.1.2",
+    "pino": "^5.17.0",
+    "rimraf": "^3.0.2",
+    "superagent": "^5.2.2",
+    "uuid": "^7.0.2"
+  }
 }
