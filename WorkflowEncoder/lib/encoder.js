@@ -8,8 +8,8 @@ const { parentPort, workerData } = require('worker_threads');
 const path = require('path');
 const ffmpeg = require('fluent-ffmpeg');
 
-const log = require('../log');
-const constants = require('../constants');
+const log = require('./log');
+const constants = require('./constants');
 
 async function encode() {
   const encodingInstructions = workerData;
@@ -89,7 +89,43 @@ async function encode() {
       })
       .save(outputAsset);
   } else if (encodingInstructions.videoEncoder === constants.ENCODER_TYPES.X264) {
-    // TODO: fill x264 encoding template
+    ffmpeg()
+      .input(inputAsset)
+      .videoBitrate(encodingInstructions.videoBitrate)
+      .videoCodec(encodingInstructions.videoEncoder)
+      .size(encodingInstructions.videoSize)
+      .audioCodec(encodingInstructions.audioEncoder)
+      .audioBitrate(encodingInstructions.audioBitrate)
+      .audioFrequency(encodingInstructions.audioFrequency)
+      .withOutputOptions('-crf 23 -force_key_frames "expr:gte(t,n_forced*2)"')
+      .outputOption('-g 48 -keyint_min 48 -sc_threshold 0 -bf 3 -b_strategy 2 -refs 5')
+      .on('progress', (info) => {
+        const message = {};
+        message.type = constants.WORKER_MESSAGE_TYPES.PROGRESS;
+        message.message = `Encoding: ${Math.round(info.percent)}%`;
+        parentPort.postMessage(message);
+      })
+      .on('end', () => {
+        const message = {};
+        message.type = constants.WORKER_MESSAGE_TYPES.DONE;
+        const endTime = Date.now();
+        message.message = `Encoding finished after ${(endTime - startTime) / 1000} s`;
+        parentPort.postMessage(message);
+      })
+      .on('error', (err, stdout, stderr) => {
+        const message = {};
+        message.type = constants.WORKER_MESSAGE_TYPES.ERROR;
+        message.message = `An error occurred during encoding. ${err.message}`;
+        parentPort.postMessage(message);
+
+        log.error(`Error: ${err.message}`);
+        log.error(`ffmpeg output: ${stdout}`);
+        log.error(`ffmpeg stderr: ${stderr}`);
+      })
+      .save(outputAsset);
+
+
+
   }
 }
 
