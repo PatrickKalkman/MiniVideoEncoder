@@ -6,7 +6,7 @@ on:
     - 'WorkflowPackager/**'
     - '.github/workflows/workflowpackager.yml'
   schedule:
-    - cron: '0 2 * * *'
+    - cron: '0 4 * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
