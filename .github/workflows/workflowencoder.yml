@@ -6,7 +6,7 @@ on:
     - 'WorkflowEncoder/**'
     - '.github/workflows/workflowencoder.yml'
   schedule:
-    - cron: '0 2 * * *'
+    - cron: '0 3 * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
