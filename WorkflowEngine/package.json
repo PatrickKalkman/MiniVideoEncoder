@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^2.5.1",
