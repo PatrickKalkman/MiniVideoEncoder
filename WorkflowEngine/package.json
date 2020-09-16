@@ -15,7 +15,7 @@
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.6",
-    "eslint-plugin-react-hooks": "^2.5.1",
+    "eslint-plugin-react-hooks": "^4.1.2",
     "fastify": "^3.2.1",
     "fastify-register-routes": "^1.1.2",
     "fastify-routes": "^3.0.1",
