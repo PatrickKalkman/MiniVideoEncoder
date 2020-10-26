@@ -16,7 +16,7 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.2",
-    "fastify": "^3.4.1",
+    "fastify": "^3.7.0",
     "fastify-register-routes": "^1.1.2",
     "fastify-routes": "^3.0.1",
     "fastify-sensible": "^3.0.1",
