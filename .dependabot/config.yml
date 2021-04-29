@@ -1,8 +1,0 @@
-version: 1
-update_configs:
-  - package_manager: "javascript"
-    directory: "/WorkflowEngine"
-    update_schedule: "weekly"
-  - package_manager: "javascript"
-    directory: "/WorkflowEncoder"
-    update_schedule: "weekly"
