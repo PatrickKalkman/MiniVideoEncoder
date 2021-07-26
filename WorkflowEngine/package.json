@@ -22,7 +22,7 @@
     "fastify-sensible": "^3.0.1",
     "mongoose": "^5.11.9",
     "pino": "^6.6.1",
-    "pino-pretty": "^4.2.1"
+    "pino-pretty": "^5.1.2"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
