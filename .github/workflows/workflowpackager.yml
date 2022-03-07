@@ -18,6 +18,7 @@ jobs:
       with:
         path: './WorkflowPackager/VERSION'
         property: 'version'
+        token: ${{ secrets.TOKEN }}   
     - name: Current version
       run: echo ${{ steps.read_property.outputs.value }}
     - name: Bump release version
@@ -47,10 +48,9 @@ jobs:
         dockerfile: ./WorkflowPackager/Dockerfile
         context: ./WorkflowPackager/
         tags: ${{ steps.bump_version.outputs.next-version }}
-    - name: Git commit changes version number
-      uses: matheusalbino/git-commit@v1.0.1
+    - name: Git auto commit
+      uses: stefanzweifel/git-auto-commit-action@v4.13.1
       with:
-          github-token: ${{ secrets.TOKEN }}
           message: 'Updated version to ${{ steps.bump_version.outputs.next-version }}'
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2.0.0
