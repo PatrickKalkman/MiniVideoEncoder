@@ -18,7 +18,7 @@ jobs:
       with:
         path: './WorkflowEncoder/VERSION'
         property: 'version'
-        token: ${{ secrets.PAT }}        
+        token: ${{ secrets.TOKEN }}       
     - name: Current version
       run: echo ${{ steps.read_property.outputs.value }}
     - name: Bump release version
