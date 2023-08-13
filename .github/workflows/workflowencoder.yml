@@ -40,7 +40,7 @@ jobs:
         property: 'version'
         value: ${{ steps.bump_version.outputs.next-version }}
     - name: Publish to pkalkman/mve-workflowencoder on Docker Hub 
-      uses: elgohr/Publish-Docker-Github-Action@master
+      uses: elgohr/Publish-Docker-Github-Action@v5
       with:
         name: pkalkman/mve-workflowencoder
         username: ${{ secrets.DOCKER_USERNAME }}
